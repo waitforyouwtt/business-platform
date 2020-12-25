@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--引入thymeleaf 标签库-->
+<html xmlns:th="http://www.thymeleaf.rog" lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>thymeleaf 学习</title>
+</head>
+
+<body>
+<span style="color: red;">读取字符串:</span>
+<div th:text="${message}"></div>
+<hr/>
+
+<span style="color: red;">表单提交:</span>
+<div>
+    <form id="login-form" th:action="@{/login-form}" method="post">
+        <input type="text" name="username"/>
+        <input type="submit" value="提交">
+    </form>
+</div>
+<hr/>
+
+<span style="color: red;">读取list集合，循环显示数据 :</span>
+<div>
+    <table>
+        <tr>
+            <td>下标</td>
+            <td>id</td>
+            <td>昵称</td>
+            <td>密码</td>
+        </tr>
+        <!--user:被循环的对象-->
+        <tr th:each="user,userNum:${users}">
+            <td th:text="${userNum.index}"></td>
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.userNick}"></td>
+            <td th:text="${user.password}"></td>
+            <!--条件判断语句-->
+            <td th:if="${user.gender ==1}">女</td>
+            <td th:unless="${user.gender ==1}">男</td>
+        </tr>
+    </table>
+</div>
+<hr/>
+
+<span style="color: red;">读取map数据的两种方式 :</span>
+<div>
+    读取Map的两种方式：
+    1.知道map 的key
+    2.不知道map 的key
+
+    <h5>方式一：</h5>
+    <div>
+        map的id: <span th:text="${map.No}"></span>
+        map的value: <span th:text="${map.address}"></span>
+    </div>
+    <h5>
+        方式二：
+    </h5>
+    <div th:each="map:${map}">
+        <span th:text="${map.key}"></span>
+        <span th:text="${map.value}"></span>
+    </div>
+</div>
+<hr/>
+
+<span style="color: red;">读取日期，格式化日期数据 :</span>
+<div>
+    <span th:text="${#dates.format(now,'yyyy-MM-dd HH:mm:ss')}"></span>
+</div>
+<hr/>
+
+<span style="color: red;">条件判断语句 :</span>
+<div>
+    <span th:if="${map.No ==1}">正常</span>
+    <span th:unless="${map.No ==1}">禁用</span>
+</div>
+<hr/>
+
+<span style="color: red;">引入一个页面 :</span>
+<div id="footer" th:include="footer::footer-frame">
+
+</div>
+</body>
+</html>

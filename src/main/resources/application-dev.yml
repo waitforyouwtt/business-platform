@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&allowMultiQueries=true
+    username: root
+    #Mac的密码：
+    password: root123456
+
+  thymeleaf:
+    # prefix: classpath:/templates
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    cache: false
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+mybatis:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: com.business.entity
+
+#分页配置
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+#打印运行时日志
+logging:
+  level:
+    com.business.dao: debug
