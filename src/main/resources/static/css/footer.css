@@ -1,0 +1,20 @@
+.py-container {
+    border:1px solid red;
+    width: 1200px;
+    margin: 0 auto ;
+}
+
+.Mod-copyright ul.helpLink li {
+    list-style-type: none;
+    display: inline-block;
+    _zoom: 1;
+    *display: inline
+}
+
+.Mod-copyright ul.helpLink li .space {
+    border-left: 1px solid #666
+}
+
+.Mod-copyright {
+    text-align: center
+}
