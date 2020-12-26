@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&allowMultiQueries=true
+    url: jdbc:mysql://localhost:3306/business-platform?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&allowMultiQueries=true
     username: root
     #Mac的密码：
     password: root123456

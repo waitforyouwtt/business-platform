@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<!--引入thymeleaf 标签库-->
+<html xmlns:th="http://www.thymeleaf.rog" lang="en">
 
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 	<title>品优购-招商合作</title>
-	 <link rel="icon" href="assets/img/favicon.ico">
+	 <link rel="icon" th:href="@{/assets/img/favicon.ico}">
 
-    <link rel="stylesheet" type="text/css" href="css/webbase.css" />
-    <link rel="stylesheet" type="text/css" href="css/pages-cooperation.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{css/webbase.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{css/pages-cooperation.css}" />
 </head>
 
 <body>
@@ -63,7 +64,7 @@
 							<form action="" class="sui-form form-inline">
 								<!--searchAutoComplete-->
 								<div class="input-append">
-									<input type="text" id="autocomplete" type="text" class="input-error input-xxlarge" />
+									<input type="text" id="autocomplete" class="input-error input-xxlarge" />
 									<button class="sui-btn btn-xlarge btn-danger" type="button">搜索</button>
 								</div>
 							</form>
@@ -155,7 +156,7 @@ $(function(){
                     </div>
                     <div class="list-title">
                         <h1>成为供应商</h1>
-                        <a class="sui-btn btn-bordered btn-shop " href="register.html" target="_blank">立即入驻</a>
+                        <a class="sui-btn btn-bordered btn-shop " th:href="@{/base/register}" target="_blank">立即入驻</a>
                     </div>
                     <div class="list">
                         <ul >

@@ -17,6 +17,20 @@ public class BaseUrlController {
     @Value("${spring.application.baseUrl}")
     private String baseUrl;
 
+    @GetMapping("/register")
+    public String register(){
+        return "/register";
+    }
+
+    @GetMapping("/index")
+    public String index(){
+        return "/admin/index";
+    }
+    @GetMapping("/home")
+    public String home(){
+        return "/admin/home";
+    }
+
     @GetMapping("/login")
     public String login(Model model){
         model.addAttribute("baseUrl",baseUrl);

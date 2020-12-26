@@ -10,8 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
-    @GetMapping("/index")
+    @GetMapping("/")
+    public String cooperation(){
+        return "cooperation";
+    }
+
+/*    @GetMapping("/index")
     public String index(){
         return "/index";
-    }
+    }*/
 }

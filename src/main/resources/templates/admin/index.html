@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<!--引入thymeleaf 标签库-->
+<html xmlns:th="http://www.thymeleaf.rog" lang="en">
 
 <head>
     <!-- 页面meta -->
@@ -9,10 +10,10 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
     <!-- 页面meta /-->
-    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
-    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" th:href="@{../plugins/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{../plugins/adminLTE/css/AdminLTE.css}">
+    <link rel="stylesheet" th:href="@{../plugins/adminLTE/css/skins/_all-skins.min.css}">
+    <link rel="stylesheet" th:href="@{../css/style.css}">
     
     <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
     <script src="../plugins/jQueryUI/jquery-ui.min.js"></script>
@@ -305,9 +306,16 @@
                 </div>
                 <ul class="sidebar-menu"  >
                     <li class="header">菜单</li>
-                    <li id="admin-index"><a href="index.html"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
+                    <li id="admin-index">
+                        <a th:href="@{/base/index}" target="_self"><i class="fa fa-dashboard"></i> <span>首页</span></a>
+                        <a th:href="@{/base/index}" target="_blank"><i class="fa fa-dashboard"></i> <span>首页</span></a>
+                        <a th:href="@{/base/index}" target="_parent"><i class="fa fa-dashboard"></i> <span>首页</span></a>
+                        <a th:href="@{/base/index}" target="_top"><i class="fa fa-dashboard"></i> <span>首页</span></a>
+                        <a th:href="@{/base/home}" target="_top"><i class="fa fa-dashboard"></i> <span>首页</span></a>
 
-				    <!-- 菜单 -->
+                    </li>
+
+                    <!-- 菜单 -->
 				    <li class="treeview">
 				        <a href="#">
 				            <i class="fa fa-folder"></i> 
