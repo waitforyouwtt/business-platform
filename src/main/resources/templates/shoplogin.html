@@ -42,20 +42,19 @@
                             <img src="img/wx_cz.jpg"/>
                         </div>
                         <div id="profile" class="tab-pane  active">
-                            <form class="sui-form" th:action="@{/user/login}" method="post">
+                            <form class="sui-form" id="login-form">
                                 <div class="input-prepend"><span class="add-on loginname"></span>
                                     <input id="prependedInput" type="text" placeholder="邮箱/用户名/手机号" class="span2 input-xfat" name="loginName" value="云澜哥哥">
                                 </div>
                                 <div class="input-prepend"><span class="add-on loginpwd"></span>
-                                    <input id="prependedInput" type="password" placeholder="请输入密码" class="span2 input-xfat" value="p">
+                                    <input id="prependedInput" type="password" placeholder="请输入密码" class="span2 input-xfat" name="loginPassword" value="p">
                                 </div>
                                 <div class="setting">
                                     <label class="checkbox inline"><input name="m1" type="checkbox" value="2" checked="">自动登录</label>
                                     <span class="forget">忘记密码？</span>
                                 </div>
                                 <div class="logined">
-                                    <!--<a class="sui-btn btn-block btn-xlarge btn-danger" href="admin/index.html" target="_blank">登&nbsp;&nbsp;录</a>-->
-                                    <input type="submit" class="sui-btn btn-block btn-xlarge btn-danger" target="_blank" value="登录" />
+                                    <input type="submit" class="sui-btn btn-block btn-xlarge btn-danger" target="_blank" id="loginButton" value="登录" />
                                 </div>
                             </form>
                             <div class="otherlogin">
@@ -96,11 +95,52 @@
 
 </div>
 
-<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
-<script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
-<script type="text/javascript" src="js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
-<script type="text/javascript" src="js/pages/shoplogin.js"></script>
+<!--<script type="text/javascript" th:src="js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" th:src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
+<script type="text/javascript" th:src="js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" th:src="js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
+<script type="text/javascript" th:src="js/pages/shoplogin.js"></script>-->
+
+<script type="text/javascript" th:src="@{/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+<script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+<script type="text/javascript" th:src="@{/layer/jquery-1.8.3.js}"></script>
+
 </body>
+
+<script>
+    $(function(){
+        //th:action="@{/user/login}" method="post"
+        $("#loginButton").bind('click',function(){
+            var data = $('#login-form').serialize();
+            console.log("序列化表单："+data);
+            $.ajax({
+                url:"/user/login",
+                type:"post",
+                dataType:"json",
+                data:{
+                    data : data
+                },
+                // 禁用按钮防止重复提交
+                beforeSend: function () {
+                    $("#loginButton").attr("disabled","disabled");
+                    layer.load(1);
+                },
+                success:function(obj){
+                    var result = obj;
+                    console.info("后台返回给前台的数据：{}",result);
+                    if (result.code == 20000){
+                        layer.msg("登录成功");
+                        setTimeout(function(){
+                            window.location.href="/base/admin/index";
+                        },1000);
+                    }else{
+                        layer.msg(result.message);
+                    }
+                },
+            });
+        });
+
+    });
+</script>
 
 </html>

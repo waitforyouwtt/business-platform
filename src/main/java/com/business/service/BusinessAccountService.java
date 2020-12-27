@@ -63,4 +63,10 @@ public interface BusinessAccountService {
      * @return
      */
     PageInfo<BusinessAccount> findPage(int page, int size);
+
+    /**
+     * 登录
+     * @param account
+     */
+    BusinessAccount login(BusinessAccount account);
 }

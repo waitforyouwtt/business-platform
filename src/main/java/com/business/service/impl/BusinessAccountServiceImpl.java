@@ -6,10 +6,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 /**
  * @Author: 凤凰[小哥哥]
@@ -30,6 +32,12 @@ public class BusinessAccountServiceImpl implements BusinessAccountService {
      */
     @Override
     public void add(BusinessAccount businessAccount){
+        businessAccount.setIsDelete(0);
+        businessAccount.setBusinessStatus(1);
+        businessAccount.setCreateBy("云澜");
+        businessAccount.setUpdateBy("云澜");
+        businessAccount.setCreateTime(new Date());
+        businessAccount.setUpdateTime(new Date());
         businessAccountMapper.insert(businessAccount);
     }
 
@@ -112,6 +120,20 @@ public class BusinessAccountServiceImpl implements BusinessAccountService {
         PageHelper.startPage(page,size);
         //分页查询
         return new PageInfo<BusinessAccount>(businessAccountMapper.selectAll());
+    }
+
+    @Override
+    public BusinessAccount login(BusinessAccount account) {
+        BusinessAccount params = new BusinessAccount();
+        params.setLoginName(account.getLoginName());
+        params.setLoginPassword(account.getLoginPassword());
+        params.setIsDelete(0);
+        params.setBusinessStatus(0);
+        List<BusinessAccount> businessAccounts = businessAccountMapper.select(params);
+        if (CollectionUtils.isEmpty(businessAccounts)){
+            return null;
+        }
+        return businessAccounts.get(0);
     }
 
     /**

@@ -1,15 +1,23 @@
 package com.business.controller;
+
+import cn.hutool.json.JSONUtil;
 import com.business.entity.BusinessAccount;
 import com.business.request.RequestBusinessAccount;
 import com.business.result.Result;
 import com.business.result.StatusCodeEnum;
 import com.business.service.BusinessAccountService;
+import com.business.utils.MapStringUtils;
 import com.github.pagehelper.PageInfo;
+import com.google.common.util.concurrent.RateLimiter;
 import io.swagger.annotations.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: 凤凰[小哥哥]
@@ -21,10 +29,40 @@ import java.util.List;
 @RestController
 @RequestMapping("/businessAccount")
 @CrossOrigin
+@Slf4j
 public class BusinessAccountController {
+
+    /**
+     * 定义每秒钟发放2个令牌
+     */
+    RateLimiter limiter = RateLimiter.create(2.0);
+    int count = 1;
+    int timeout  = 1;
 
     @Autowired
     private BusinessAccountService businessAccountService;
+
+
+    /***
+     * 新增BusinessAccount数据
+     * @param data
+     * @return
+     */
+    @ApiOperation(value = "BusinessAccount添加",notes = "添加BusinessAccount方法详情",tags = {"BusinessAccountController"})
+    @PostMapping("/addRequestBody")
+    @ResponseBody
+    public Result addRequestBody(@RequestParam("data") String data) throws UnsupportedEncodingException {
+
+        if(limiter.tryAcquire(count,timeout, TimeUnit.SECONDS)){
+            String formData = URLDecoder.decode(data, "utf-8");
+            BusinessAccount account = JSONUtil.toBean(JSONUtil.toJsonStr(MapStringUtils.json2map(formData)), BusinessAccount.class);
+            businessAccountService.add(account);
+            return new Result(true, StatusCodeEnum.OK.getCode(),"添加成功");
+        }else {
+            log.info("get fail,curr rate is:{}",limiter.getRate());
+            return Result.error();
+        }
+    }
 
 
     /***

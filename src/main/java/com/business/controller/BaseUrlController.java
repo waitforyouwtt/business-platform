@@ -37,6 +37,12 @@ public class BaseUrlController {
         return "/shoplogin";
     }
 
+    @GetMapping("/admin/index")
+    public String adminIndex(Model model){
+        model.addAttribute("baseUrl",baseUrl);
+        return "/admin/index";
+    }
+
     @GetMapping("/footer")
     public String footer(Model model){
         model.addAttribute("baseUrl",baseUrl);
