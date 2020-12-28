@@ -26,6 +26,7 @@ public class BaseUrlController {
     public String index(){
         return "/admin/index";
     }
+
     @GetMapping("/home")
     public String home(){
         return "/admin/home";
@@ -47,5 +48,25 @@ public class BaseUrlController {
     public String footer(Model model){
         model.addAttribute("baseUrl",baseUrl);
         return "/footer";
+    }
+
+    @GetMapping("/seller")
+    public String baseSeller(){
+        return "/admin/seller";
+    }
+
+    @GetMapping("/password")
+    public String basePassword(){
+        return "/admin/password";
+    }
+
+    @GetMapping("/goods/edit")
+    public String goodsEdit(){
+        return "/admin/goods_edit";
+    }
+
+    @GetMapping("/goods")
+    public String goods(){
+        return "/admin/goods";
     }
 }
