@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Objects;
@@ -22,7 +21,13 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController{
+
+    /**
+     * 当前账号常量
+     */
+    private static final String ACCOUNT = "account";
+
 
     @Autowired
     BusinessAccountService businessAccountService;
@@ -35,6 +40,7 @@ public class UserController {
         if (Objects.isNull(result)){
             return Result.error(404,"用户名或密码错误");
         }
+        setAccount(result);
         return Result.success(result);
     }
 }

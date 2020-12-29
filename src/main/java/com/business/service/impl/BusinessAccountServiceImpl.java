@@ -34,8 +34,6 @@ public class BusinessAccountServiceImpl implements BusinessAccountService {
     public void add(BusinessAccount businessAccount){
         businessAccount.setIsDelete(0);
         businessAccount.setBusinessStatus(1);
-        businessAccount.setCreateBy("云澜");
-        businessAccount.setUpdateBy("云澜");
         businessAccount.setCreateTime(new Date());
         businessAccount.setUpdateTime(new Date());
         businessAccountMapper.insert(businessAccount);
@@ -135,6 +133,20 @@ public class BusinessAccountServiceImpl implements BusinessAccountService {
         }
         return businessAccounts.get(0);
     }
+
+    @Override
+    public BusinessAccount queryBusinessAccount(BusinessAccount account){
+        BusinessAccount params = new BusinessAccount();
+        params.setLoginName(account.getLoginName());
+        params.setCompanyMobile(account.getCompanyMobile());
+
+        List<BusinessAccount> businessAccounts = businessAccountMapper.select(account);
+        if(CollectionUtils.isEmpty(businessAccounts)){
+            return null;
+        }
+        return businessAccounts.get(0);
+    }
+
 
     /**
      * BusinessAccount构建查询对象

@@ -1,5 +1,6 @@
 package com.business.controller;
 
+import com.business.entity.BusinessAccount;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/base")
-public class BaseUrlController {
+public class BaseUrlController extends BaseController{
 
     @Value("${spring.application.baseUrl}")
     private String baseUrl;
@@ -51,7 +52,9 @@ public class BaseUrlController {
     }
 
     @GetMapping("/seller")
-    public String baseSeller(){
+    public String baseSeller(Model model){
+        BusinessAccount account = getAccount();
+        model.addAttribute("account",account);
         return "/admin/seller";
     }
 

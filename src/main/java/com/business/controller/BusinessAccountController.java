@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping("/businessAccount")
 @CrossOrigin
 @Slf4j
-public class BusinessAccountController {
+public class BusinessAccountController extends BaseController{
 
     /**
      * 定义每秒钟发放2个令牌
@@ -56,6 +56,11 @@ public class BusinessAccountController {
         if(limiter.tryAcquire(count,timeout, TimeUnit.SECONDS)){
             String formData = URLDecoder.decode(data, "utf-8");
             BusinessAccount account = JSONUtil.toBean(JSONUtil.toJsonStr(MapStringUtils.json2map(formData)), BusinessAccount.class);
+            if (!Objects.isNull(businessAccountService.queryBusinessAccount(account))){
+                return Result.error(5005,"账号已存在，请重新填写注册信息");
+            }
+            account.setCreateBy(account.getLoginName());
+            account.setUpdateBy(account.getLoginName());
             businessAccountService.add(account);
             return new Result(true, StatusCodeEnum.OK.getCode(),"添加成功");
         }else {

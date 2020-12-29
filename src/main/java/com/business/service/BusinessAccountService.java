@@ -69,4 +69,11 @@ public interface BusinessAccountService {
      * @param account
      */
     BusinessAccount login(BusinessAccount account);
+
+    /**
+     * 查找账号信息
+     * @param account
+     * @return
+     */
+    BusinessAccount queryBusinessAccount(BusinessAccount account);
 }
