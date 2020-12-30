@@ -98,7 +98,6 @@ public class BaseUrlController extends BaseController{
         customer.setCustomerName("云澜");
         customer.setTransactionTime(new Date());
         customer.setTemplate("/mail-model");
-        customer.setBackgroundUrlPath(backgroundUrlPath+"zhaoshang-bank-logo.jpeg");
         model.addAttribute("customer",customer);
         return "/mail-model";
     }
