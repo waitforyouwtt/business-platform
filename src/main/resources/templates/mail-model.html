@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--引入thymeleaf 标签库-->
+<html xmlns:th="http://www.thymeleaf.rog" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>邮件模板</title>
+</head>
+
+<style>
+    .parent-div{
+        border:1px dotted #606c84;
+        height:500px;
+        width: 500px;
+        margin: 0 auto;
+
+    }
+    .header-logo{
+        border: 1px dotted #606c84;
+        height: 100px;
+        width: 500px;
+    }
+    .header-logo-sun{
+        border: 0px dotted #606c84;
+        height: 100px;
+        width: 250px;
+        margin: 0 100px;
+    }
+
+    .mail-content{
+        border: 0px dotted #606c84;
+        height: 400px;
+        width: 500px;
+    }
+    .mail-content table{
+        border: 0px dotted #7a869d;
+        width: 500px;
+        font-family: Arial, 微软雅黑, 宋体, "Sakkal Majalla", Serif;
+    }
+    .mail-content table tr{
+        height: 40px;
+        border-bottom: 1px dotted #7a869d;
+    }
+    .mail-content table td{
+        border-bottom: 1px dotted #7a869d;
+    }
+</style>
+<body>
+<div class="parent-div">
+    <div class="header-logo">
+        <div class="header-logo-sun"><img src="http://81.68.86.66:8080/group1/M00/00/00/rBEADl_sbG-AJvrXAABcFa3_PBQ71.jpeg" width="250px" height="100px"></div>
+    </div>
+    <div class="mail-content">
+        <table>
+            <tr>
+                <td>
+                    <span>尊敬的招商银行客户：</span><span name="customerName" th:text="${customer.customerName}"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您好，您的银行尾号9530账号于<span name="transactionTime" th:text="${#dates.format(customer.transactionTime,'yyyy-MM-dd HH:mm:ss')}"></span>
+                    入账
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    款项，人民币100000000元，请注意查收【招商银行】。鼠年定投
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="javascript:void(0)">cmbt.cn/ws5g2</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

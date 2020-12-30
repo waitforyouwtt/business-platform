@@ -13,6 +13,22 @@ spring:
     encoding: UTF-8
     cache: false
 
+  #邮箱配置开始
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    protocol: smtp
+    username: 1140867582@qq.com
+    #qq邮箱的授权码
+    password: cxvyyyphryozhjfe
+
+  smtp:
+    auth: true
+    starttls:
+      enable: true
+      required: true
+  #邮箱配置结束
+
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -28,7 +44,10 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
+
 #打印运行时日志
 logging:
   level:
     com.business.dao: debug
+server:
+  port: 8080

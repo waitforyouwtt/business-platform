@@ -1,11 +1,15 @@
 package com.business.controller;
 
 import com.business.entity.BusinessAccount;
+import com.business.request.EmailParam;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Arrays;
+import java.util.Date;
 
 /**
  * @author 凤凰小哥哥
@@ -17,6 +21,12 @@ public class BaseUrlController extends BaseController{
 
     @Value("${spring.application.baseUrl}")
     private String baseUrl;
+
+    @Value("${spring.mail.username}")
+    private String emailSender;
+
+    @Value("${file.rootPath}")
+    private String backgroundUrlPath;
 
     @GetMapping("/register")
     public String register(){
@@ -72,4 +82,25 @@ public class BaseUrlController extends BaseController{
     public String goods(){
         return "/admin/goods";
     }
+
+    @GetMapping("/email")
+    public String email(Model model){
+        model.addAttribute("emailSender",emailSender);
+        model.addAttribute("emailRecipients", Arrays.asList("17621007255@163.com"));
+        model.addAttribute("emailCopyPersons",Arrays.asList("15290810931@163.com"));
+        model.addAttribute("emailSubject","元旦祝福");
+        model.addAttribute("emailContent","happy new year");
+        return "/email";
+    }
+    @GetMapping("/mail-model")
+    public String mailModel(Model model){
+        EmailParam customer = new EmailParam();
+        customer.setCustomerName("云澜");
+        customer.setTransactionTime(new Date());
+        customer.setTemplate("/mail-model");
+        customer.setBackgroundUrlPath(backgroundUrlPath+"zhaoshang-bank-logo.jpeg");
+        model.addAttribute("customer",customer);
+        return "/mail-model";
+    }
+
 }
