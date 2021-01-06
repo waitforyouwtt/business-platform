@@ -102,4 +102,9 @@ public class BaseUrlController extends BaseController{
         return "/mail-model";
     }
 
+    @GetMapping("/job")
+    public String job(){
+        return "/job";
+    }
+
 }

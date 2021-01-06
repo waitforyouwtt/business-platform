@@ -1,6 +1,7 @@
 package com.business.dao;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.business.entity.BusinessAccount;
-import tk.mybatis.mapper.common.Mapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @Author: 凤凰[小哥哥]
@@ -8,7 +9,7 @@ import tk.mybatis.mapper.common.Mapper;
  * @Version: 1.0
  * @Email: 15290810931@163.com
  */
-@org.apache.ibatis.annotations.Mapper
-public interface BusinessAccountMapper extends Mapper<BusinessAccount> {
+@Mapper
+public interface BusinessAccountMapper extends BaseMapper<BusinessAccount> {
 
 }

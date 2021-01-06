@@ -48,6 +48,15 @@
 	</form>
 	<hr/>
 
+	<span style="color: red;">用户转账，触发邮件发送 :</span>
+	<form th:action="@{/transaction-mail}" method="post" enctype="multipart/form-data">
+		<span>金主&nbsp;&nbsp;&nbsp;&nbsp;：</span><input type="text" placeholder="金主" name="transactionSender" /><br>
+		<span>幸运儿&nbsp;&nbsp;&nbsp;&nbsp;：</span><input type="text" placeholder="幸运儿"   name="transactionRecipient" /><br/>
+		<span>交易金额&nbsp;&nbsp;&nbsp;&nbsp;：</span><input type="text" placeholder="交易金额" name="transactionMoney" /><br/>
+		<input type="submit" value="提交"/>
+	</form>
+	<hr/>
+
 </div>
 </body>
 

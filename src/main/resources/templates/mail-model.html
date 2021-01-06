@@ -48,29 +48,30 @@
 <body>
 <div class="parent-div">
     <div class="header-logo">
-        <div class="header-logo-sun"><img src="http://81.68.86.66:8080/group1/M00/00/00/rBEADl_sbG-AJvrXAABcFa3_PBQ71.jpeg" width="250px" height="130px"></div>
+        <div class="header-logo-sun"><img th:src="${customer.backgroundUrlPath}" width="250px" height="130px"></div>
     </div>
     <div class="mail-content">
         <table>
             <tr>
                 <td>
-                    <span>尊敬的招商银行客户：</span><span name="customerName" th:text="${customer.customerName}"></span>
+                    <span>尊敬的</span><span th:text="${customer.openBankName}"></span><span>客户：</span>
+                    <span name="customerName" th:text="${customer.customerName}"></span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您好，您的银行尾号9530账号于<span name="transactionTime" th:text="${#dates.format(customer.transactionTime,'yyyy-MM-dd HH:mm:ss')}"></span>
-                    入账
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您好，您的银行尾号<span th:text="${customer.openBankAccount}"></span>账号于<span name="transactionTime" th:text="${#dates.format(customer.transactionTime,'yyyy-MM-dd HH:mm:ss')}"></span>
+                    发生账户资金变动，
                 </td>
             </tr>
             <tr>
                 <td>
-                    款项，人民币100000000元，请注意查收【招商银行】。鼠年定投
+                    资金变动类型为[<span th:text="${customer.transactionType}"></span>],变动资金人民币<span th:text="${customer.operationMoney}"></span>元，当前账户余额为：
                 </td>
             </tr>
             <tr>
                 <td>
-                    <a href="javascript:void(0)">cmbt.cn/ws5g2</a>
+                    <span th:text="${customer.accountBalance}"></span>元，请注意查收【<span th:text="${customer.openBankName}"></span>】。鼠年定投 <a href="javascript:void(0)">cmbt.cn/ws5g2</a>
                 </td>
             </tr>
         </table>

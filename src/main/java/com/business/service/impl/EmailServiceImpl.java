@@ -3,11 +3,11 @@ package com.business.service.impl;
 import com.business.request.EmailParam;
 import com.business.request.RequestEmail;
 import com.business.service.EmailService;
-import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -124,6 +124,7 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
+    @Async
     @Override
     public void modelSend(EmailParam vo){
         MimeMessage message = mailSender.createMimeMessage();
