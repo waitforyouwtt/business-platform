@@ -1,7 +1,11 @@
 package com.business.controller;
 
 import com.business.entity.BusinessAccount;
+import com.business.entity.ScheduleJob;
 import com.business.request.EmailParam;
+import com.business.service.ScheduleJobService;
+import com.business.vo.RequestScheduleJob;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 凤凰小哥哥
@@ -24,6 +29,9 @@ public class BaseUrlController extends BaseController{
 
     @Value("${spring.mail.username}")
     private String emailSender;
+
+    @Autowired
+    private ScheduleJobService scheduleJobService;
 
     @Value("${file.rootPath}")
     private String backgroundUrlPath;
@@ -90,7 +98,7 @@ public class BaseUrlController extends BaseController{
         model.addAttribute("emailCopyPersons",Arrays.asList("15290810931@163.com"));
         model.addAttribute("emailSubject","元旦祝福");
         model.addAttribute("emailContent","happy new year");
-        return "/email";
+        return "/mail/email";
     }
     @GetMapping("/mail-model")
     public String mailModel(Model model){
@@ -99,12 +107,15 @@ public class BaseUrlController extends BaseController{
         customer.setTransactionTime(new Date());
         customer.setTemplate("/mail-model");
         model.addAttribute("customer",customer);
-        return "/mail-model";
+        return "/mail/mail-model";
     }
 
     @GetMapping("/job")
-    public String job(){
-        return "/job";
+    public String job(Model model){
+        RequestScheduleJob vo = new RequestScheduleJob();
+        List<ScheduleJob> data = scheduleJobService.queryScheduleJobPage(vo).getList();
+        model.addAttribute("data",data);
+        return "/job/jobs";
     }
 
 }

@@ -1,6 +1,8 @@
 package com.business.entity;
 
 import lombok.Data;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +10,7 @@ import java.util.Date;
  * @date 2021-01-04
  */
 @Data
-public class ScheduleJob {
+public class ScheduleJob implements Serializable {
 
     private Long jobId;
 

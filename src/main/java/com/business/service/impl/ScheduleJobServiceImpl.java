@@ -7,9 +7,11 @@ import com.business.entity.ScheduleJob;
 import com.business.job.ScheduleUtils;
 import com.business.service.ScheduleJobService;
 import com.business.service.SingleService;
+import com.business.vo.RequestScheduleJob;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.quartz.CronTrigger;
 import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author 凤凰小哥哥
@@ -60,14 +61,19 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
     }
 
     @Override
-    public PageInfo queryPage(Map<String, Object> params) {
-        String beanName = (String)params.get("beanName");
-        int page = Integer.parseInt(params.getOrDefault("pageNum", "1").toString());
-        int pageSize = Integer.parseInt(params.getOrDefault("pageSize", "10").toString());
-        PageHelper.startPage(page,pageSize);
+    public PageInfo queryScheduleJobPage(RequestScheduleJob vo) {
+        PageHelper.startPage(vo.getPageNum(),vo.getPageSize());
 
         QueryWrapper<ScheduleJob> wrapper = new QueryWrapper<ScheduleJob>();
-        wrapper.eq("bean_name",beanName);
+        if (StringUtils.isNotBlank(vo.getBeanName())){
+            wrapper.eq("bean_name",vo.getBeanName());
+        }
+        if (StringUtils.isNotBlank(vo.getMethodName())){
+            wrapper.eq("method_name",vo.getMethodName());
+        }
+        if (vo.getStatus() != null){
+            wrapper.eq("status",vo.getStatus());
+        }
 
         List<ScheduleJob> scheduleJobs = scheduleJobMapper.selectList(wrapper);
         PageInfo pageInfo = new PageInfo<>(scheduleJobs);

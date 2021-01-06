@@ -1,6 +1,7 @@
 package com.business.service;
 
 import com.business.entity.ScheduleJob;
+import com.business.vo.RequestScheduleJob;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public interface ScheduleJobService {
      */
     void resume(List<Long> jobIds);
 
-    PageInfo queryPage(Map<String, Object> params);
+    PageInfo queryScheduleJobPage(RequestScheduleJob vo);
 
     ScheduleJob getScheduleJobByJobId(Long jobId);
 }

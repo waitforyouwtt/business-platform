@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--引入thymeleaf 标签库-->
+<html xmlns:th="http://www.thymeleaf.rog" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>定时任务列表</title>
+</head>
+
+<style>
+    .job-div{
+        border:1px dotted #7a869d;
+        width: 1000px;
+        height: 400px;
+    }
+    .job-div table tr td{
+        border:1px dotted #7a869d;
+        text-align: center;
+    }
+</style>
+<body>
+<span style="color: red;">定时任务列表展示 :</span>
+<div class="job-div">
+    <table>
+        <tr>
+            <td>作业id</td>
+            <td>job类的名称</td>
+            <td>job的名称</td>
+            <td>job的参数</td>
+            <td>job执行表达式</td>
+            <td>job状态</td>
+            <td>job备注</td>
+            <td>job创建时间</td>
+            <td>操作</td>
+        </tr>
+        <!--user:被循环的对象-->
+        <tr th:each="job:${data}">
+            <td th:text="${job.jobId}"></td>
+            <td th:text="${job.beanName}"></td>
+            <td th:text="${job.methodName}"></td>
+            <td th:text="${job.params}"></td>
+            <td th:text="${job.cronExpression}"></td>
+            <!--条件判断语句-->
+            <td th:if="${job.status ==0}">正常</td>
+            <td th:unless="${job.status ==0}">暂停</td>
+            <td th:text="${job.remark}"></td>
+            <td th:text="${#dates.format(job.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td>
+                <a href="">开始</a>
+                <a href="">暂停</a>
+                <a href="">更新</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>

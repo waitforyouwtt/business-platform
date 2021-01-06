@@ -6,6 +6,7 @@ import com.business.service.ScheduleJobLogService;
 import com.business.service.ScheduleJobService;
 import com.business.utils.CronUtils;
 import com.business.utils.DateUtils;
+import com.business.vo.RequestScheduleJob;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -46,14 +47,14 @@ public class ScheduleJobController {
 
 
     /**
-     * 列表
+     * 定时任务列表
      *
-     * @param params
+     * @param vo
      * @return
      */
     @PostMapping("/list")
-    public Result list(@RequestParam Map<String, Object> params) {
-        return Result.success(scheduleJobService.queryPage(params));
+    public Result list(RequestScheduleJob vo) {
+        return Result.success(scheduleJobService.queryScheduleJobPage(vo));
     }
 
     /**

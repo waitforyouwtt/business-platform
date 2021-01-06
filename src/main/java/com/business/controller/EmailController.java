@@ -22,8 +22,8 @@ import java.util.Date;
 @RestController
 public class EmailController {
 
-    @Value("${file.rootPath}")
-    private String backgroundUrlPath;
+    @Value("${spring.mail.username}")
+    private String systemSender;
 
     @Autowired
     EmailService emailService;
@@ -44,7 +44,7 @@ public class EmailController {
     @ApiOperation("发送附件邮件：支持附件和抄送")
     @PostMapping("/enclosure-send")
     public String enclosureSend(@ModelAttribute RequestEmail vo) {
-        vo.setEmailSender("1140867582@qq.com");
+        vo.setEmailSender(systemSender);
         if (StringUtils.isEmpty(vo.getEmailSender()) || CollectionUtils.isEmpty(vo.getEmailRecipients())){
             return "fail";
         }
@@ -55,7 +55,7 @@ public class EmailController {
     @ApiOperation("发送模板邮件：支持附件和抄送")
     @PostMapping("/model-send")
     public String modelSend(@ModelAttribute EmailParam vo) {
-        vo.setEmailSender("1140867582@qq.com");
+        vo.setEmailSender(systemSender);
         if (StringUtils.isEmpty(vo.getEmailSender()) || CollectionUtils.isEmpty(vo.getEmailRecipients())){
             return "fail";
         }
@@ -64,7 +64,7 @@ public class EmailController {
         vo.setOpenBankName("招商银行");
         vo.setOperationMoney(new BigDecimal("1000000000"));
         vo.setAccountBalance(new BigDecimal("10000000200"));
-        vo.setTemplate("/mail-model");
+        vo.setTemplate("/mail/mail-model");
         vo.setTransactionTime(new Date());
         emailService.modelSend(vo);
         return "true";
