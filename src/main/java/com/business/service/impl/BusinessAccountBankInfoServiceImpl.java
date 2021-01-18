@@ -123,7 +123,7 @@ public class BusinessAccountBankInfoServiceImpl implements BusinessAccountBankIn
         vo.setOperationMoney(transactionMoney);
         vo.setAccountBalance(sender.getAccountBalance().subtract(transactionMoney));
         vo.setBackgroundUrlPath(null);
-        vo.setTemplate("/mail-model");
+        vo.setTemplate("/mail/mail-model");
         vo.setTransactionTime(new Date());
         if (sender.getOpenBankName().equals("招商银行")){
             vo.setOpenBankAccount(sender.getOpenBankAccount().substring(12,16));
@@ -150,7 +150,7 @@ public class BusinessAccountBankInfoServiceImpl implements BusinessAccountBankIn
         vo.setOperationMoney(transactionMoney);
         vo.setAccountBalance(sender.getAccountBalance().add(transactionMoney));
         vo.setBackgroundUrlPath(null);
-        vo.setTemplate("/mail-model");
+        vo.setTemplate("/mail/mail-model");
         vo.setTransactionTime(new Date());
         if (sender.getOpenBankName().equals("招商银行")){
             vo.setOpenBankAccount(sender.getOpenBankAccount().substring(12,16));

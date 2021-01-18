@@ -105,7 +105,7 @@ public class BaseUrlController extends BaseController{
         EmailParam customer = new EmailParam();
         customer.setCustomerName("云澜");
         customer.setTransactionTime(new Date());
-        customer.setTemplate("/mail-model");
+        customer.setTemplate("/mail/mail-model");
         model.addAttribute("customer",customer);
         return "/mail/mail-model";
     }
