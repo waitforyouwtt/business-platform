@@ -9,4 +9,9 @@
         and concat(login_name,contact_mobile,contact_email) LIKE CONCAT ('%',#{transactioner},'%');
     </select>
 
+    <select id="maxJobId" resultType="Long">
+       select Max(job_id) as id from schedule_job
+    </select>
+
+
 </mapper>

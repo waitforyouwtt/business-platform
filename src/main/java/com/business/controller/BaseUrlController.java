@@ -1,6 +1,9 @@
 package com.business.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.business.dao.ScheduleCronMapper;
 import com.business.entity.BusinessAccount;
+import com.business.entity.ScheduleCron;
 import com.business.entity.ScheduleJob;
 import com.business.request.EmailParam;
 import com.business.service.ScheduleJobService;
@@ -12,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +33,9 @@ public class BaseUrlController extends BaseController{
 
     @Value("${spring.mail.username}")
     private String emailSender;
+
+    @Resource
+    private ScheduleCronMapper scheduleCronMapper;
 
     @Autowired
     private ScheduleJobService scheduleJobService;
@@ -111,7 +118,14 @@ public class BaseUrlController extends BaseController{
     }
 
     @GetMapping("/job")
-    public String job(Model model){
+    public String job(Model model) {
+        QueryWrapper<ScheduleCron> wrapper = new QueryWrapper<>();
+        model.addAttribute("data", scheduleCronMapper.selectList(wrapper));
+        return "/job/add";
+    }
+
+    @GetMapping("/jobs")
+    public String jobs(Model model){
         RequestScheduleJob vo = new RequestScheduleJob();
         List<ScheduleJob> data = scheduleJobService.queryScheduleJobPage(vo).getList();
         model.addAttribute("data",data);

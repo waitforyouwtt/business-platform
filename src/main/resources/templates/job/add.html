@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--引入thymeleaf 标签库-->
+<html xmlns:th="http://www.thymeleaf.rog" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加定时任务</title>
+</head>
+
+<style>
+.job-div{
+    border:1px solid red;
+    margin: 30px 100px 30px 100px;
+    font-family: Arial, 微软雅黑, 宋体, "Sakkal Majalla", Serif;
+}
+.cron-div{
+    border:1px dotted #7a869d;
+    width: 100%;
+    height: 400px;
+}
+.cron-div table tr,.cron-div table tr td{
+    border:1px dotted #7a869d;
+    text-align: center;
+}
+.cron-div table tr td{
+    width: 300px;
+}
+</style>
+<body>
+
+<div class="job-div">
+    <span style="color: red;">新增定时任务 :</span>
+    <form id="job-form">
+        <label>job执行类的名称</label>
+        <input type="text" name="beanName" id="beanName" placeholder="请输入job执行类的名称"/><br/>
+
+        <label>job执行方法的名称</label>
+        <input type="text" name="methodName" id="methodName" placeholder="请输入job执行方法的名称"/><br/>
+
+        <label>job参数</label>
+        <input type="text" name="params" placeholder="请输入任务job描述"/><br/>
+
+        <label>cron执行时间表达式</label>
+        <input type="text" name="cronExpression" placeholder="请输入job cron执行时间表达式"/><br/>
+
+        <label>job描述</label>
+        <input type="text" name="remark" placeholder="请输入任务job描述"/><br/>
+
+        <label>任务状态</label>
+        <input type="text" name="status" placeholder="请输入任务任务状态" VALUE="0"/><br/>
+
+        <input type="submit" value="提交" class="submitBtn"/>
+    </form>
+
+</div>
+<div class="cron-div">
+    <table>
+        <th>
+            常用的时间表达式
+        </th>
+        <tr>
+            <td>cron id</td>
+            <td>cron描述</td>
+            <td>cron表达式</td>
+            <td>cron 作者</td>
+        </tr>
+        <tr th:each="cron:${data}">
+            <td th:text="${cron.id}"></td>
+            <td th:text="${cron.cronDesc}"></td>
+            <td th:text="${cron.cron}"></td>
+            <td th:text="${cron.author}"></td>
+        </tr>
+
+    </table>
+</div>
+
+</body>
+<script type="text/javascript" th:src="@{/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+<script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+<script type="text/javascript" th:src="@{/layer/jquery-1.8.3.js}"></script>
+<script type="text/javascript">
+    $(function(){
+        $(".submitBtn").click(function(){
+
+            var params = {};
+            params.beanName   = $('input[name="beanName"]').val();
+            params.methodName = $('input[name="methodName"]').val();
+            params.params     = $('input[name="params"]').val();
+            params.cronExpression = $('input[name="cronExpression"]').val();
+            params.remark     = $('input[name="remark"]').val();
+            console.log(params.toString());
+
+            $.ajax({
+                url:'/job/add',
+                type: 'POST',
+                dataType:'json',
+                contentType: "application/json;charset=UTF-8",//指定消息请求类型
+                data: JSON.stringify(params),
+                success:function(obj){
+                    var result = obj;
+                    console.info("后台返回给前台的数据：{}",result);
+                    if (result.code == 20000){
+                        window.location.href="/base/jobs";
+                    }else{
+                        layer.msg(result.message);
+                    }
+                },
+            });
+        })
+    })
+</script>
+
+</html>

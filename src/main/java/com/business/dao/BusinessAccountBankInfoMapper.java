@@ -20,4 +20,9 @@ public interface BusinessAccountBankInfoMapper extends BaseMapper<BusinessAccoun
      * @return
      */
     Map<String,String> queryTransactionAccouontUserId(@Param("transactioner") String transactioner);
+
+    /**
+     * 获取最大的jobId
+     */
+    Long maxJobId();
 }

@@ -2,6 +2,7 @@ package com.business.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.business.constants.Constant;
+import com.business.dao.BusinessAccountBankInfoMapper;
 import com.business.dao.ScheduleJobMapper;
 import com.business.entity.ScheduleJob;
 import com.business.job.ScheduleUtils;
@@ -39,6 +40,9 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
 
     @Autowired
     private SingleService singleService;
+
+    @Resource
+    private BusinessAccountBankInfoMapper businessAccountBankInfoMapper;
 
     /**
      * 项目启动时，初始化定时器
@@ -85,11 +89,15 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
         return scheduleJobMapper.selectById(jobId);
     }
 
+    public Long maxJobId(){
+        return businessAccountBankInfoMapper.maxJobId();
+    }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void save(ScheduleJob scheduleJob) {
-        scheduleJob.setCreateTime(new Date());
+        scheduleJob.setJobId(maxJobId()+1);
         scheduleJob.setStatus(Byte.parseByte(Constant.NORMAL+""));
         scheduleJobMapper.insert(scheduleJob);
         ScheduleUtils.createScheduleJob(scheduler, scheduleJob);

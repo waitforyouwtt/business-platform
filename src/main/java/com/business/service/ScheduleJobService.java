@@ -51,4 +51,10 @@ public interface ScheduleJobService {
     PageInfo queryScheduleJobPage(RequestScheduleJob vo);
 
     ScheduleJob getScheduleJobByJobId(Long jobId);
+
+    /**
+     * 获取最大的jobId
+     * @return
+     */
+    Long maxJobId();
 }
