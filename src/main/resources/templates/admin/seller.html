@@ -22,6 +22,7 @@
 
 <body class="hold-transition skin-red sidebar-mini" >
             <!-- 正文区域 -->
+            <form id="seller-form" class="seller-form">
             <section class="content">
                 <div class="box-body">
                     <!--tab页-->
@@ -36,18 +37,15 @@
 						
                         <!--tab内容-->
                         <div class="tab-content">
-
                             <!--表单内容-->
                             <div class="tab-pane active" id="home">
-                                <div class="row data-type">                                  
-
+                                <div class="row data-type">
                                     <div class="col-md-2 title">公司名称</div>
                                     <div class="col-md-10 data">
                                         <input type="hidden" class="form-control" name="id" th:value="${account.id}">
-
                                         <input type="text" class="form-control"   placeholder="公司名称" disabled name="companyName" th:value="${account.companyName}">
                                     </div>
-									
+
 									<div class="col-md-2 title">公司手机</div>
                                     <div class="col-md-10 data">
                                         <input type="text" class="form-control"  placeholder="公司手机" name="companyMobile" th:value="${account.companyMobile}">
@@ -90,37 +88,37 @@
                                      
                                     <div class="col-md-2 title">税务登记证号</div>
                                     <div class="col-md-10 data">
-                                        <input type="text" class="form-control"   placeholder="税务登记证号" name="taxRegistrationNo" th:value="${account.taxRegistrationNo}">
+                                        <input type="text" class="form-control"   placeholder="税务登记证号" name="taxRegistrationNo" th:value="${account.taxRegistrationNo}" disabled>
                                     </div>
                                     
  									<div class="col-md-2 title">组织机构代码证</div>
                                     <div class="col-md-10 data">
-                                        <input type="text" class="form-control"  placeholder="组织机构代码证" name="organizationNo" th:value="${account.organizationNo}">
+                                        <input type="text" class="form-control"  placeholder="组织机构代码证" name="organizationNo" th:value="${account.organizationNo}" disabled>
                                     </div>
                                     
                                     <div class="col-md-2 title">法定代表人</div>
                                     <div class="col-md-10 data">
-                                        <input type="text" class="form-control"   placeholder="法定代表人" name="legalRepresentative" th:value="${account.legalRepresentative}">
+                                        <input type="text" class="form-control"   placeholder="法定代表人" name="legalRepresentative" th:value="${account.legalRepresentative}" disabled>
                                     </div>
                                     
  									<div class="col-md-2 title">法定代表人身份证号</div>
                                     <div class="col-md-10 data">
-                                        <input type="text" class="form-control"   placeholder="法定代表人身份证号" name="legalRepresentativeIdCard" th:value="${account.legalRepresentativeIdCard}">
+                                        <input type="text" class="form-control"   placeholder="法定代表人身份证号" name="legalRepresentativeIdCard" th:value="${account.legalRepresentativeIdCard}" disabled>
                                     </div>
 
  									<div class="col-md-2 title">开户行名称</div>
                                     <div class="col-md-10 data">
-                                        <input type="text" class="form-control" placeholder="开户行名称" name="openBankName" th:value="${account.openBankName}">
+                                        <input type="text" class="form-control" placeholder="开户行名称" name="openBankName" th:value="${account.openBankName}" disabled>
                                     </div>
                                     
                                     <div class="col-md-2 title">开户行支行</div>
                                     <div class="col-md-10 data">
-                                        <input type="text" class="form-control"   placeholder="开户行支行" name="openBankBranchName" th:value="${account.openBankBranchName}">
+                                        <input type="text" class="form-control"   placeholder="开户行支行" name="openBankBranchName" th:value="${account.openBankBranchName}" disabled>
                                     </div>
 
                                     <div class="col-md-2 title">银行账号</div>
                                     <div class="col-md-10 data">
-                                        <input type="text" class="form-control"   placeholder="银行账号" name="openBankAccount" th:value="${account.openBankAccount}">
+                                        <input type="text" class="form-control"   placeholder="银行账号" name="openBankAccount" th:value="${account.openBankAccount}" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -131,11 +129,50 @@
                    </div>
                   <div class="btn-toolbar list-toolbar">
 				      <button class="btn btn-primary" ><i class="fa fa-save"></i>保存</button>
-				      <a  data-toggle="modal" class="btn btn-danger">提交</a>
+				      <a  data-toggle="modal" class="btn btn-danger" id="submit-btn">提交</a>
 				  </div>
             </section>
+            </form>
             <!-- 正文区域 /-->
+            <script type="text/javascript" th:src="@{/plugins/jQuery/jquery-2.2.3.min.js}"></script>
+            <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+            <script type="text/javascript" th:src="@{/layer/jquery-1.8.3.js}"></script>
 </body>
+<script>
+    $(function(){
 
+        $("#submit-btn").bind('click',function(){
+            var id = $("input[name='id']").val();
+
+            var params = {};
+            params.companyName = $('input[name="companyName"]').val();
+            params.companyMobile = $('input[name="companyMobile"]').val();
+            params.companyAddress = $('input[name="companyAddress"]').val();
+            params.contactName = $('input[name="contactName"]').val();
+            params.contactWechat = $('input[name="contactWechat"]').val();
+            params.contactMobile = $('input[name="contactMobile"]').val();
+            params.contactEmail = $('input[name="contactEmail"]').val();
+            params.businessLicenseNo = $('input[name="businessLicenseNo"]').val();
+
+            $.ajax({
+                url:"/businessAccount/"+id,
+                type:"put",
+                dataType:"json",
+                contentType : 'application/json;charset=UTF-8',
+                data: JSON.stringify(params),
+                success:function(obj){
+                    var result = obj;
+                    console.info("后台返回给前台的数据：{}",result);
+                    if (result.code == 20000){
+                        layer.msg(result.message);
+                    }else{
+                        layer.msg(result.message);
+                    }
+                },
+            });
+        });
+
+    });
+</script>
 
 </html>

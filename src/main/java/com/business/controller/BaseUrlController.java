@@ -7,6 +7,7 @@ import com.business.entity.ScheduleCron;
 import com.business.entity.ScheduleJob;
 import com.business.request.EmailParam;
 import com.business.service.ScheduleJobService;
+import com.business.service.StudentService;
 import com.business.vo.RequestScheduleJob;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,6 +40,9 @@ public class BaseUrlController extends BaseController{
 
     @Autowired
     private ScheduleJobService scheduleJobService;
+
+    @Autowired
+    private StudentService studentService;
 
     @Value("${file.rootPath}")
     private String backgroundUrlPath;
@@ -130,6 +134,12 @@ public class BaseUrlController extends BaseController{
         List<ScheduleJob> data = scheduleJobService.queryScheduleJobPage(vo).getList();
         model.addAttribute("data",data);
         return "/job/jobs";
+    }
+
+    @GetMapping("/echarts")
+    public String echarts(Model model){
+        model.addAttribute("data", studentService.queryAllByLimit(0,50));
+        return "/job/add";
     }
 
 }
